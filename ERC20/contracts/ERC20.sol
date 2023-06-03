@@ -10,7 +10,7 @@ contract ERC20 is IERC20 {
     address public owner; //owner of the contract
     uint public totalSupply; //totalsupply of the contract
     mapping(address => uint) public balanceOf; //balance of the caller
-    mapping(address => mapping(address => uint)) public allowance; //
+    mapping(address => mapping(address => uint)) public allowance; //owner approves => the spender + the amount
     string public name = "PRACTISE"; //name of the ERC20 token
     string public symbol = "PRT"; // Symbol of the erc 20 toke 
     uint8 public decimals = 18; //decimals of the token
@@ -29,8 +29,8 @@ contract ERC20 is IERC20 {
         require(msg.sender== owner); //only owner can call this function
         _;
     }
-    
 
+    //////////FUNCTIONS////////////
     function transfer(address recipient, uint amount) external returns (bool) {
         balanceOf[msg.sender] -= amount;
         balanceOf[recipient] += amount;
