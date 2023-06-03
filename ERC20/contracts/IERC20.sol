@@ -18,7 +18,8 @@ interface IERC20 {
         address recipient,
         uint amount
     ) external returns (bool);
-
+    
+    //////////Events///////////
     event Transfer(address indexed from, address indexed to, uint value);
     event Approval(address indexed owner, address indexed spender, uint value);
 }
