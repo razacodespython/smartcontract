@@ -31,6 +31,7 @@ contract ERC20 is IERC20 {
     }
 
     //////////FUNCTIONS////////////
+    //transfer tokens from the sender to the designated address
     function transfer(address recipient, uint amount) external returns (bool) {
         balanceOf[msg.sender] -= amount;
         balanceOf[recipient] += amount;
@@ -38,12 +39,17 @@ contract ERC20 is IERC20 {
         return true;
     }
 
-    function approve(address spender, uint amount) external returns (bool) {
+
+    //owner approving the allowance limit for an address
+    function approve(address spender, uint amount) external onlyOwner returns (bool) {
         allowance[msg.sender][spender] = amount;
         emit Approval(msg.sender, spender, amount);
         return true;
     }
 
+    //function that transfers tokens from one address to another
+    //caller can only transfer amounts if amount is lower than allowance
+    //allowance is set in approve function and kept track in allowance mapping
     function transferFrom(
         address sender,
         address recipient,
@@ -56,12 +62,14 @@ contract ERC20 is IERC20 {
         return true;
     }
 
+    //only owner can mint new tokens
     function mint(uint amount) external onlyOwner {
         balanceOf[msg.sender] += amount;
         totalSupply += amount;
         emit Transfer(address(0), msg.sender, amount);
     }
 
+    //anyone can burn their tokens
     function burn(uint amount) external {
         balanceOf[msg.sender] -= amount;
         totalSupply -= amount;
