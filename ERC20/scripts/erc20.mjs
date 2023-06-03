@@ -1,20 +1,14 @@
-
-
-const Web3 = require('web3');
 require('dotenv').config();
-
+const Web3 = require('web3');
 // Connect to your Ethereum provider
 const web3 = new Web3('https://scroll-alphanet.public.blastapi.io');
 const pK = process.env.PRIVATE_KEY;
 
-const contractABI = [
-  // Paste the ABI of your ERC20 contract here
-];
+const contractABI = require('.build/contracts/ERC20.json').abi;
 const contractAddress = '0xC8EB86f06bc7ca8FeD2cE9709a80529ad30E9108';
 
 
 const contract = new web3.eth.Contract(contractABI, contractAddress);
-
 
 // Example function to transfer tokens
 async function transferTokens(recipient, amount) {
